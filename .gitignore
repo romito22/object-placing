@@ -1,0 +1,4 @@
+# intermedios del generador; el usdz final si se versiona
+build/
+.DS_Store
+__pycache__/

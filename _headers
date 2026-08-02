@@ -1,0 +1,8 @@
+# Cloudflare Pages: Safari necesita el MIME correcto para abrir el USDZ
+# en AR Quick Look cuando se navega directo al archivo.
+/models/*
+  Content-Type: model/vnd.usdz+zip
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*
+  Cache-Control: public, max-age=86400
