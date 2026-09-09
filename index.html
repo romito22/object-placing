@@ -1,159 +1,66 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Alfombra maíz 14 × 12 ft — ver en AR</title>
-<meta name="description" content="Coloca una alfombra de 14 × 12 pies en tu piso con realidad aumentada.">
-<meta name="theme-color" content="#12100c">
-<style>
-  :root {
-    --bg: #12100c;
-    --panel: #1b1811;
-    --line: #322c1e;
-    --texto: #f2ede0;
-    --tenue: #9a927e;
-    --maiz: #fbec5d;
-  }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    color: var(--texto);
-    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    display: flex;
-    justify-content: center;
-    padding: 24px 20px calc(40px + env(safe-area-inset-bottom));
-  }
-  main { width: 100%; max-width: 520px; }
-
-  header { text-align: center; margin-bottom: 22px; }
-  h1 { font-size: 26px; line-height: 1.2; margin: 0 0 6px; letter-spacing: -0.01em; }
-  .medida { color: var(--maiz); font-variant-numeric: tabular-nums; font-size: 15px; margin: 0; }
-  .medida span { color: var(--tenue); }
-
-  .tarjeta {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    overflow: hidden;
-  }
-  .tarjeta img.poster { display: block; width: 100%; height: auto; }
-
-  .cta { padding: 18px; }
-  a.ar, button.ar {
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    width: 100%; padding: 17px 20px;
-    background: var(--maiz); color: #221d05;
-    font: 600 17px/1 inherit; text-decoration: none;
-    border: 0; border-radius: 13px; cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
-  a.ar:active, button.ar:active { transform: scale(0.985); }
-  .ar svg { width: 21px; height: 21px; flex: none; }
-
-  /* Safari exige que el <a rel="ar"> tenga UN solo hijo: la imagen.
-     Por eso el enlace real es invisible y lo dispara el boton visible. */
-  #enlace-ar { position: absolute; width: 0; height: 0; overflow: hidden; opacity: 0; pointer-events: none; }
-
-  .pasos { margin: 22px 0 0; padding: 0; list-style: none; counter-reset: p; }
-  .pasos li {
-    position: relative; padding: 0 0 0 34px; margin-bottom: 13px;
-    color: var(--tenue); font-size: 14.5px; counter-increment: p;
-  }
-  .pasos li::before {
-    content: counter(p); position: absolute; left: 0; top: 1px;
-    width: 22px; height: 22px; border-radius: 50%;
-    background: var(--line); color: var(--texto);
-    font-size: 12px; font-weight: 600;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .pasos b { color: var(--texto); font-weight: 600; }
-
-  .aviso {
-    margin-top: 22px; padding: 15px 17px;
-    background: var(--panel); border: 1px solid var(--line);
-    border-radius: 13px; font-size: 14px; color: var(--tenue);
-  }
-  .aviso b { color: var(--texto); }
-  .aviso code {
-    display: block; margin-top: 9px; padding: 9px 11px;
-    background: #0c0a07; border-radius: 8px;
-    font: 12.5px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
-    color: var(--maiz); word-break: break-all;
-  }
-  [hidden] { display: none !important; }
-
-  footer { margin-top: 26px; text-align: center; font-size: 12.5px; color: #6b6455; }
-</style>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#102c25">
+<meta name="description" content="Traza una cancha de vóley en tu patio con realidad aumentada. Medidas oficiales de 18 × 9 m o tamaño proporcional a tu espacio.">
+<title>Cancha AR — Del plano a tu patio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script type="module" src="js/app.mjs"></script>
 </head>
 <body>
+<header class="mast"><a href="./" aria-label="Cancha AR, inicio"><span class="brand-icon">⌗</span> CANCHA <b>AR</b></a><span>VOLEIBOL / 01</span></header>
 <main>
-
-  <header>
-    <h1>Alfombra maíz</h1>
-    <p class="medida">14 × 12 ft <span>· 4.2672 × 3.6576 m</span></p>
-  </header>
-
-  <div class="tarjeta">
-    <img class="poster" src="assets/poster.png" alt="Alfombra tejida color maíz, formato rectangular">
-    <div class="cta">
-      <!-- El enlace que iOS reconoce. allowsContentScaling=0 bloquea el pellizco
-           para que nadie pueda reescalarla y arruinar la medida real. -->
-      <a id="enlace-ar" rel="ar" href="models/alfombra-maiz-14x12.usdz#allowsContentScaling=0">
-        <img src="assets/poster.png" alt="">
-      </a>
-
-      <button class="ar" id="boton-ar" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M12 2.6 3.8 7v10L12 21.4 20.2 17V7Z"/>
-          <path d="M3.8 7 12 11.6 20.2 7M12 11.6v9.8"/>
-        </svg>
-        Ver en mi piso
-      </button>
-    </div>
-  </div>
-
-  <ol class="pasos" id="pasos">
-    <li>Apunta la cámara al <b>piso</b> y muévete un poco: el iPhone necesita reconocer la superficie.</li>
-    <li>Cuando aparezca la alfombra, <b>arrástrala con un dedo</b>. Se queda pegada al piso, no se hunde ni flota.</li>
-    <li>Con <b>dos dedos</b> la giras para alinearla con tu sala.</li>
-    <li>El tamaño está <b>bloqueado a 14 × 12 ft</b> a propósito, para que lo que ves sea la medida real.</li>
-  </ol>
-
-  <div class="aviso" id="aviso-escritorio" hidden>
-    <b>Ábrelo desde tu iPhone.</b>
-    La realidad aumentada necesita Safari en iOS. Copia esta dirección en el celular:
-    <code id="url-actual"></code>
-  </div>
-
-  <footer>Modelo generado a escala real · 1 unidad = 1 metro</footer>
-
+<section class="intro"><p class="eyebrow">TU PATIO. TU CANCHA.</p><h1>Del plano <br>a tu <em>patio.</em></h1><p>Ubica las esquinas, traza los límites y encuentra dónde va la red. Todo sobre tu espacio real.</p></section>
+<div class="workspace">
+<section class="blueprint" aria-labelledby="plan-title">
+<div class="plan-head"><h2 id="plan-title">Plano de trazado</h2><span id="scale-badge">ESCALA 100 %</span></div>
+<svg id="plan" viewBox="0 0 660 500" role="img" aria-labelledby="svg-title svg-desc">
+<title id="svg-title">Cancha de vóley de 18 por 9 metros</title><desc id="svg-desc">Vista superior con cuatro esquinas A, B, C y D, dos líneas de ataque y red central. Los postes quedan un metro fuera de cada lateral.</desc>
+<defs><pattern id="grid" width="22" height="22" patternUnits="userSpaceOnUse"><path d="M22 0H0V22" fill="none" stroke="#ffffff" stroke-opacity=".045"/></pattern></defs>
+<rect width="660" height="500" fill="url(#grid)"/>
+<g stroke="#8baa99" stroke-width="1"><path d="M110 91V69M550 91V69M110 80H550M80 125H62M80 345H62M70 125V345"/></g>
+<g fill="#b9cabe" font-size="15" text-anchor="middle"><text id="plan-length" x="330" y="68">18 m</text><text id="plan-width" x="50" y="240" transform="rotate(-90 50 240)">9 m</text></g>
+<path d="M110 125H550V345H110Z" fill="#ffffff" fill-opacity=".025" stroke="#f1f1d9" stroke-width="3"/>
+<path d="M257 125V345M403 125V345" stroke="#f1f1d9" stroke-width="2"/>
+<path d="M330 125V345" stroke="#f1f1d9" stroke-width="2"/>
+<path id="post-axis" d="M330 100V370" stroke="#dce87c" stroke-width="4" stroke-dasharray="4 5"/>
+<g fill="#dce87c"><circle id="post-top" cx="330" cy="100" r="6"/><circle id="post-bottom" cx="330" cy="370" r="6"/></g>
+<g fill="#a6beaf" text-anchor="middle" font-size="12"><text x="183" y="240">FONDO</text><text x="477" y="240">FONDO</text><text x="293" y="208">ATAQUE</text><text x="368" y="208">ATAQUE</text><text id="attack-left" x="293" y="264">3 m</text><text id="attack-right" x="368" y="264">3 m</text></g>
+<g stroke="#dce87c" stroke-width="3"><path d="M98 125H122M110 113V137M538 125H562M550 113V137M538 345H562M550 333V357M98 345H122M110 333V357"/></g>
+<g fill="#dce87c" font-size="18" font-weight="600"><text x="92" y="112">A</text><text x="556" y="112">B</text><text x="556" y="375">C</text><text x="92" y="375">D</text></g>
+<text id="post-label" x="330" y="405" fill="#dce87c" text-anchor="middle" font-size="13">RED + CENTRO DE POSTES</text>
+<text x="330" y="479" fill="#8baa99" text-anchor="middle" font-size="11">LAS CRUCES INDICAN LOS PUNTOS EXACTOS A MARCAR</text>
+</svg>
+<div class="legend"><span><i></i>Límites y ataque</span><span><i class="gold"></i>Esquinas y postes</span><span>Vista superior</span></div>
+<div class="plan-stats"><div><span>DIAGONAL A–C / B–D</span><strong id="diagonal">20,12 m</strong></div><div><span>POSTES ENTRE EJES</span><strong id="posts">11 m</strong></div><div><span>ÁREA DE JUEGO</span><strong id="area">162 m²</strong></div></div>
+</section>
+<section class="settings" aria-labelledby="settings-title">
+<p class="eyebrow">01 / AJUSTA EL ESPACIO</p><h2 id="settings-title">La medida justa.</h2>
+<form id="settings-form">
+<label for="length">Largo de la cancha <span>metros</span></label>
+<div class="number-row"><input id="length" name="length" type="number" min="6" max="18" step="0.01" value="18" required inputmode="decimal"><span>× <b id="width">9</b> m de ancho</span></div>
+<input id="scale" aria-label="Largo de cancha en metros" type="range" min="6" max="18" step="0.1" value="18">
+<div class="range-labels"><span>6 m · compacta</span><button id="reset" type="button">18 m · oficial ↺</button></div>
+<p id="size-note" class="small">Medida oficial de juego · proporción 2:1.</p>
+<label for="net-height">Altura de la red</label><select id="net-height"><option value="2.43">Masculina · 2,43 m</option><option value="2.24">Femenina · 2,24 m</option></select>
+<label class="toggle"><input id="show-net" type="checkbox" checked><span>Mostrar red y postes en AR<small>Desactiva para ver solo las marcas del suelo.</small></span></label>
+<p class="small">El largo y el ancho cambian juntos. La altura de red, las líneas de 5 cm y el retiro de postes de 1 m se mantienen.</p>
+<button class="primary" id="prepare" type="submit">Preparar cancha en AR <span>↗</span></button>
+</form>
+<a id="ar-link" class="primary ar-link" rel="ar" hidden><img src="assets/court-icon.svg" alt="Abrir cancha en mi patio"></a>
+<a id="download" class="download" hidden>Descargar modelo USDZ</a>
+<p id="status" role="status" aria-live="polite" class="small">El tamaño elegido queda bloqueado en AR.</p>
+<div id="unsupported" class="notice" hidden><b>Para AR: Safari en iPhone o iPad.</b><p>Abre esta misma dirección en tu dispositivo. Aquí puedes ajustar las medidas y descargar el modelo.</p></div>
+<noscript><p>Activa JavaScript para ajustar las medidas y preparar tu cancha.</p></noscript>
+</section>
+</div>
+<section class="instructions"><div><p class="eyebrow">02 / LLÉVALO AL SUELO</p><h2>Cuatro esquinas.<br>Un punto de partida.</h2></div><ol><li><b>Reconoce el patio.</b><p>Abre AR, apunta al suelo y mueve el teléfono despacio hasta que aparezca la cancha.</p></li><li><b>Alinea y orienta.</b><p>Arrastra la cancha hasta tu primera marca y gírala con dos dedos para alinear un borde. La escala está bloqueada.</p></li><li><b>Marca y comprueba.</b><p>Coloca tus marcas en el centro de las cruces amarillas de las cuatro esquinas y los dos postes. Comprueba lados y diagonales con cinta antes de trazar.</p></li></ol></section>
+<aside class="field-note"><span>ANTES DE TRAZAR</span><p>AR es una guía visual y puede desplazarse mientras caminas; no reconoce estacas ni guarda anclajes entre sesiones. Deja también espacio libre fuera de las líneas: mínimo 3 m alrededor (24 × 15 m para la cancha oficial). Las competiciones mundiales y oficiales FIVB exigen 5 m a los lados y 6,5 m al fondo.</p></aside>
 </main>
-
-<script>
-  (function () {
-    var enlace = document.getElementById('enlace-ar');
-    var boton  = document.getElementById('boton-ar');
-
-    // Prueba canonica de soporte de AR Quick Look.
-    var soportaAR = document.createElement('a').relList
-      && document.createElement('a').relList.supports
-      && document.createElement('a').relList.supports('ar');
-
-    if (soportaAR) {
-      boton.addEventListener('click', function () { enlace.click(); });
-    } else {
-      boton.disabled = true;
-      boton.style.opacity = '0.45';
-      boton.style.cursor = 'default';
-      document.getElementById('pasos').hidden = true;
-      document.getElementById('url-actual').textContent = location.href.split('#')[0];
-      document.getElementById('aviso-escritorio').hidden = false;
-    }
-  })();
-</script>
-</body>
-</html>
+<footer><span>CANCHA AR <span class="footer-dot">/</span> HECHO PARA TU ESPACIO</span><a href="https://www.fivb.com/volleyball/the-game/official-volleyball-rules/" target="_blank" rel="noopener noreferrer">Medidas FIVB 2025–2028 ↗</a></footer>
+</body></html>
