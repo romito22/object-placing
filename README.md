@@ -1,4 +1,5 @@
 # Cancha AR · object-placing
+https://romito22.github.io/object-placing/
 
 Traza una cancha de vóley en tu patio desde Safari en iPhone/iPad. Reemplaza la antigua alfombra en el mismo repositorio y sitio publicado.
 
