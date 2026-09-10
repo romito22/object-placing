@@ -7,7 +7,7 @@ let modelURL;
 const supportsAR = !!ar.relList?.supports?.('ar');
 $('unsupported').hidden=supportsAR;
 $('prepare').hidden=supportsAR;
-if (!supportsAR) $('prepare').textContent='↓ Preparar modelo';
+if (!supportsAR) $('prepare-label').textContent='Preparar modelo';
 function invalidate() {
   ar.hidden=true; download.hidden=true;
   ar.removeAttribute('href'); download.removeAttribute('href');
