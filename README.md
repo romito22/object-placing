@@ -6,7 +6,7 @@ Traza una cancha de vóley en tu patio desde Safari en iPhone/iPad. Reemplaza la
 ## Uso
 
 1. Elige largo entre **6 y 18 m** (ancho proporcional 2:1), altura de red masculina **2,43 m** o femenina **2,24 m**, y si quieres ver la red.
-2. Pulsa **Preparar cancha en AR**, luego **Abrir cancha en mi patio**.
+2. Pulsa el botón grande **Abrir cámara**. En dispositivos compatibles el modelo se prepara automáticamente al ajustar las medidas.
 3. Reconoce el suelo, mueve y gira la cancha para alinearla. La escala queda bloqueada mediante `#allowsContentScaling=0`.
 4. Marca el centro de las cuatro cruces de esquina y las dos cruces de postes. Comprueba lados y ambas diagonales con cinta.
 
@@ -35,6 +35,6 @@ node tools/generate.mjs
 usdchecker --arkit models/cancha-18x9.usdz
 ```
 
-`models/cancha-18x9.usdz` es un modelo estándar de referencia. El botón crea el modelo actual como Blob y requiere un segundo toque para abrir Quick Look. Cambiar cualquier control invalida el modelo preparado para evitar colocar medidas anteriores.
+`models/cancha-18x9.usdz` es un modelo estándar de referencia. En dispositivos AR, cada cambio regenera el Blob para abrir Quick Look con un solo toque. En escritorio se prepara mediante el botón de descarga. Los controles incluyen símbolos, etiquetas legibles y áreas táctiles grandes.
 
 Publicación existente verificada en GitHub Pages: https://romito22.github.io/object-placing/ . Sirve la raíz sin build. `_headers` también conserva compatibilidad con Cloudflare Pages para el MIME USDZ. Las fuentes Barlow Condensed y DM Sans se cargan desde Google Fonts.

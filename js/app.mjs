@@ -6,12 +6,13 @@ const length=$('length'), net=$('net-height'), showNet=$('show-net'), ar=$('ar-l
 let modelURL;
 const supportsAR = !!ar.relList?.supports?.('ar');
 $('unsupported').hidden=supportsAR;
-if (!supportsAR) $('prepare').innerHTML='Preparar modelo USDZ <span>↓</span>';
+$('prepare').hidden=supportsAR;
+if (!supportsAR) $('prepare').textContent='↓ Preparar modelo';
 function invalidate() {
   ar.hidden=true; download.hidden=true;
   ar.removeAttribute('href'); download.removeAttribute('href');
   if(modelURL) { URL.revokeObjectURL(modelURL); modelURL=undefined; }
-  $('status').textContent='El tamaño elegido queda bloqueado en AR.';
+  $('status').textContent='';
 }
 function update() {
   invalidate();
@@ -36,14 +37,14 @@ function update() {
   $('posts').textContent=`${format(d.width+2)} m`;
   $('area').textContent=`${format(d.length*d.width)} m²`;
   $('size-note').textContent=d.length===18?'Medida oficial de juego · proporción 2:1.':'Tamaño recreativo reducido · conserva proporción 2:1; no es reglamentario.';
+  if(supportsAR) prepareModel();
 }
 length.addEventListener('input',update);
 $('scale').addEventListener('input',e=>{length.value=e.target.value;update();});
 $('reset').addEventListener('click',()=>{length.value=18;update();});
 net.addEventListener('change',update); showNet.addEventListener('change',update);
-$('settings-form').addEventListener('submit',e=>{
-  e.preventDefault();
-  if(!e.target.reportValidity()) return;
+function prepareModel() {
+  if(!$('settings-form').reportValidity()) return;
   invalidate();
   try {
     const d=dimensions(length.valueAsNumber,Number(net.value));
@@ -54,13 +55,13 @@ $('settings-form').addEventListener('submit',e=>{
     download.href=modelURL;
     download.download=`cancha-${d.length}x${d.width}-red-${d.netHeight}.usdz`;
     download.hidden=false;
-    $('status').textContent=`Cancha de ${format(d.length)} × ${precise(d.width)} m preparada. ${supportsAR?'Toca «Abrir cancha en mi patio».':'Descarga disponible. Para colocarla en AR usa Safari en iPhone o iPad.'}`;
-    // A separate tap preserves the user gesture required to launch Quick Look.
-    if(supportsAR) ar.focus();
+    $('status').textContent=`${format(d.length)} × ${precise(d.width)} m · tamaño fijo`;
+    download.hidden=supportsAR;
   } catch(error) {
     invalidate();
     $('status').textContent='No se pudo preparar el modelo. Vuelve a intentarlo.';
     console.error(error);
   }
-});
+}
+$('settings-form').addEventListener('submit', e => { e.preventDefault(); prepareModel(); });
 update();
